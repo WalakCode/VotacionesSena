@@ -10,16 +10,15 @@ const loginUser = async (info) => {
             const status = await userRepository.verifyUser([cedula, ficha])
             if (status.rows.length > 0){
                 const userID = status.rows[0].id_votantes
+                const cedula = status.rows[0].cedula
                 const jornada = await userRepository.getJornada([ficha])
                 const jornadaID = parseInt(jornada.rows[0].jornada)
-                console.log(jornadaID)
-                return {jornadaID, userID}
+                return {jornadaID, userID,cedula}
             }else{
                 return {error:'no existe cedula o ficha'}
             }
         }
     }else{
-        console.log('asd')
        return {error:'espacios en blanco'}
     }
     

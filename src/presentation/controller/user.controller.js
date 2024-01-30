@@ -1,33 +1,55 @@
-const userService = require('../../business/services/user.services')
+const userService = require("../../business/services/user.services");
 
 const getMain = async (req, res) => {
-    res.render('main')
-}
+  delete req.session.userID;
+  delete req.session.jornadaID;
+  res.header("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.header("Pragma", "no-cache");
+  res.render("main");
+};
+
 const postLogin = async (req, res) => {
-    const status = await userService.loginUser(req.body)
-    
-    if (status.error) {
-        res.json(status)
-    }
-    switch (status.jornadaID) {
-        case 0:
-            res.render('candidatos mañana')
-            break;
-        case 1:
-            res.render('candidatos tarde')
-            break;
-        case 2:
-            res.render('candidatos noche')
-            break;
-        case 3:
-            res.render('candidatos virtual')
-            break;
-    }
-}
 
+  const status = await userService.loginUser(req.body);
 
+  if (status.error) {
+    res.json(status);
+  }
+
+  req.session.userID = status.userID;
+  req.session.jornadaID = status.jornadaID;
+  req.session.cedula = status.cedula;
+
+  res.redirect("/candidatos");
+};
+
+const getCandidatos = async (req, res) => {
+  res.header("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.header("Pragma", "no-cache");
+
+  const cedula = parseInt(req.session.cedula)
+  if (req.session.userID) {
+    switch (req.session.jornadaID) {
+      case 0:
+        res.render("candidatos mañana",{cedula:cedula});
+        break;
+      case 1:
+        res.render("candidatos tarde",{cedula:cedula});
+        break;
+      case 2:
+        res.render("candidatos noche",{cedula:cedula});
+        break;
+      case 3:
+        res.render("candidatos virtual",{cedula:cedula});
+        break;
+    }
+  } else {
+    res.send("error");
+  }
+};
 
 module.exports = {
-    getMain,
-    postLogin
-}
+  getMain,
+  postLogin,
+  getCandidatos,
+};
