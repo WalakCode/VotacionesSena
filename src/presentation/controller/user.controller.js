@@ -5,10 +5,11 @@ const getMain = async (req, res) => {
 }
 const postLogin = async (req, res) => {
     const status = await userService.loginUser(req.body)
+    
     if (status.error) {
         res.json(status)
     }
-    switch (status) {
+    switch (status.jornadaID) {
         case 0:
             res.render('candidatos mañana')
             break;

@@ -9,12 +9,11 @@ const loginUser = async (info) => {
             const ficha = parseInt(info.ficha)
             const status = await userRepository.verifyUser([cedula, ficha])
             if (status.rows.length > 0){
-                const fichaID = parseInt(status.rows[0].ficha)
-                console.log(fichaID)
-                const jornada = await userRepository.getJornada([fichaID])
+                const userID = status.rows[0].id_votantes
+                const jornada = await userRepository.getJornada([ficha])
                 const jornadaID = parseInt(jornada.rows[0].jornada)
                 console.log(jornadaID)
-                return jornadaID
+                return {jornadaID, userID}
             }else{
                 return {error:'no existe cedula o ficha'}
             }
