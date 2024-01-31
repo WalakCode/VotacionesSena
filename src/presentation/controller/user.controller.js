@@ -3,8 +3,11 @@ const userService = require("../../business/services/user.services");
 const getMain = async (req, res) => {
   delete req.session.userID;
   delete req.session.jornadaID;
+  delete req.session.cedula;
+
   res.header("Cache-Control", "no-store, no-cache, must-revalidate");
   res.header("Pragma", "no-cache");
+
   res.render("main");
 };
 
@@ -14,8 +17,10 @@ const postLogin = async (req, res) => {
 
   if (status.error) {
     res.json(status);
+    // errores de estado al iniciar sesion con status.error = 'el error que sucedio' 
   }
 
+  //en caso de no error se guarda en sessiones estos datos 
   req.session.userID = status.userID;
   req.session.jornadaID = status.jornadaID;
   req.session.cedula = status.cedula;
@@ -24,10 +29,14 @@ const postLogin = async (req, res) => {
 };
 
 const getCandidatos = async (req, res) => {
+
   res.header("Cache-Control", "no-store, no-cache, must-revalidate");
   res.header("Pragma", "no-cache");
 
   const cedula = parseInt(req.session.cedula)
+
+
+
   if (req.session.userID) {
     switch (req.session.jornadaID) {
       case 0:
@@ -44,12 +53,11 @@ const getCandidatos = async (req, res) => {
         break;
     }
   } else {
-    res.send("error");
+    res.send("error session no activa");
   }
 };
 
 module.exports = {
   getMain,
   postLogin,
-  getCandidatos,
 };

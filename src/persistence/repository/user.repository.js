@@ -21,7 +21,8 @@ const getJornada = async(ficha)=>{
 }
 
 
+
 module.exports = {
     verifyUser,
-    getJornada
+    getJornada,
 }
