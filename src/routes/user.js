@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const  {getMain,postLogin} = require('../presentation/controller/user.controller')
+const  {postLogin, getCandidatos,getMain} = require('../presentation/controller/user.controller')
+const {generarToken,validarToken} = require('../middlewares/auth.middleware')
 
-router.get('/',getMain)
-    .post('/login',postLogin)
-    .get('/candidatos')
+router.post('/login',generarToken,postLogin)
+    .get('/candidatos',getCandidatos)
+    .get('/',validarToken,getMain)
+
 
 module.exports = router 

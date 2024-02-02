@@ -21,6 +21,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use("/", router);
 
+
 app.use((req, res) => {
   res.render("error");
 });

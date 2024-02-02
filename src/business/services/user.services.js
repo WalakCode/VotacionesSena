@@ -1,4 +1,5 @@
 const userRepository = require("../../persistence/repository/user.repository");
+const fs = require('fs');
 
 const loginUser = async (info) => {
   if (info.cedula && info.ficha) {
@@ -23,7 +24,20 @@ const loginUser = async (info) => {
   }
 };
 
+const getCandidatos = async (jornada)=>{
+  // const result = await userRepository.getCandidatos([jornada])
+
+  // const img = result.rows[0].imagen
+
+  // const binary = Buffer.from(img,'base64')
+
+  // fs.writeFileSync('imagen.jpeg',img)
+
+  return null
+}
+
 
 module.exports = {
   loginUser,
+  getCandidatos
 };

@@ -20,9 +20,18 @@ const getJornada = async(ficha)=>{
     }
 }
 
-
+const getCandidatos = async(jornada)=>{
+    // try{
+    //     const candidatos = await db.query(`SELECT imagen FROM public.candidatos JOIN public.fichas ON public.candidatos.ficha = public.fichas.id_fichas WHERE public.fichas.jornada = $1`,jornada)
+    //     return candidatos
+    // }catch(error){
+    //     console.log(error)
+        return null
+    // }
+}
 
 module.exports = {
     verifyUser,
     getJornada,
+    getCandidatos
 }
