@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const  {postLogin, getCandidatos,getMain} = require('../presentation/controller/user.controller')
-const {generarToken,validarToken} = require('../middlewares/auth.middleware')
+const  {postLogin,getMain,getCandidatos} = require('../presentation/controller/user.controller')
+const {validarToken} = require('../middlewares/auth.middleware')
 
-router.post('/login',generarToken,postLogin)
-    .get('/candidatos',getCandidatos)
-    .get('/',validarToken,getMain)
+router.post('/api/login',postLogin)
+    .post('/api/votos',validarToken,getCandidatos)
 
 
 module.exports = router 

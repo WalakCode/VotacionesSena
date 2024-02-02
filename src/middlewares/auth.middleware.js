@@ -1,54 +1,29 @@
-const userService = require("../business/services/user.services");
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
-
-const generarToken = async (req, res, next) => {
-
-    const status = await userService.loginUser(req.body);
-
-    if (status.error) {
-        res.json({
-            'error': status.error
-        });
-    } else {
-
-        const userInf = {
-            'userID': status.userID,
-            'jornadID': status.jornadaID,
-            'cedula': status.cedula
-        };
-
-        const options =
-        {
-            expiresIn: '15m'
-        };
-
-        const token = jwt.sign(userInf, process.env.SK, options);
-        req.token = token
-        next()
-    }
-};
-
+const jwt = require("jsonwebtoken");
 
 const validarToken = async (req, res, next) => {
-
-    const verificartoken = promisify(jwt.verify)
-
-    const accessToken = req.header['authorization']
-    if (!accessToken) res.send('acceso denegado')
-
+  let token = req.headers["x-access-token"] || req.headers["authorization"];
+  if (!token) {
+    res.status(401).send({
+      error: "es necesario el token",
+    });
+    return;
+  }
+  if (token.startsWith("Bearer ")) {
+    token = token.slice(7, token.length);
+  }
+  if (token) {
     try {
-        const user = await verificartoken(accessToken, process.env.SK);
-        console.log(user)
-        next()
+      const result = jwt.verify(token, process.env.SK);
+      req.result = result;
+      next();
     } catch (error) {
-        console.log(error)
-        res.send('acceso denegado token invalido o expirado')
+      return res.json({
+        message: "el token no es valido",
+      });
     }
-}
-
+  }
+};
 
 module.exports = {
-    generarToken,
-    validarToken
+  validarToken,
 };
