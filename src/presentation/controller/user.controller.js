@@ -2,14 +2,7 @@ const userService = require("../../business/services/user.services");
 const jwt = require('jsonwebtoken');
 
 const getMain = async (req, res) => {
-  res.json({
-    name: "Mcbride Blackburn",
-    gender: "male",
-    company: "SLOFAST",
-    email: "mcbrideblackburn@slofast.com",
-    phone: "+1 (868) 544-3393",
-    address: "496 Cedar Street, Jennings, Tennessee, 5349",
-  });
+res.send('hola mundo')
 };
 
 const postLogin = async (req, res) => {
