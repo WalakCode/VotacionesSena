@@ -24,7 +24,7 @@ const postLogin = async (req, res) => {
     const options ={expiresIn: '15m'};
 
     const token = jwt.sign(userInf,process.env.SK,options)
-
+  
     res.json({
       message:'autentificacion bien',
       token:token
@@ -32,38 +32,31 @@ const postLogin = async (req, res) => {
   }
 };
 
-const getCandidatos = async(req,res)=>{
-  console.log(req.result)
+const getVotos = async(req,res)=>{
+
+  // console.log(req.result)
+  // console.log(req.body)
+
+  const candidatoID = req.body.candidatoID
+  const userID = parseInt(req.result.userID)
+  
+  const jornadaID = req.result.jornadaID 
+
+  const voto = await userService.verifyVoto(userID)
+    if(!voto){
+      const status = await userService.insertVoto([candidatoID,userID])
+      if(status){
+        res.json(status)
+      }else{
+        res.json({message:'error al insertar'})
+      }
+    }else{
+      res.json(voto)
+    }
 }
-
-// const getCandidatos = async (req, res) => {
-//   const cedula = parseInt(req.session.cedula);
-
-//   // const jornada = req.session.jornadaID
-//   // const imagenes = await userService.getCandidatos(jornada)
-
-//   if (req.session.userID) {
-//     switch (req.session.jornadaID) {
-//       case 1:
-//         res.render("candidatos mañana", { cedula: cedula });
-//         break;
-//       case 2:
-//         res.render("candidatos tarde", { cedula: cedula });
-//         break;
-//       case 3:
-//         res.render("candidatos noche", { cedula: cedula });
-//         break;
-//       case 4:
-//         res.render("candidatos virtual", { cedula: cedula });
-//         break;
-//     }
-//   } else {
-//     res.send("error session no activa");
-//   }
-// };
 
 module.exports = {
   postLogin,
-  getCandidatos,
+  getVotos,
   getMain,
 };
