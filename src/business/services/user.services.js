@@ -25,6 +25,8 @@ const loginUser = async (info) => {
 
         const cedula = parseInt(info.cedula);
         const ficha = parseInt(info.ficha);
+        console.log(cedula,ficha
+          )
         const status = await userRepository.getUserInf([cedula, ficha]);
 
         if (status.rows.length > 0) {
