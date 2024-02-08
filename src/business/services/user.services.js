@@ -56,7 +56,8 @@ const loginUser = async (info) => {
 const verifyVoto = async (data) => {
 
   const jornada = await userRepository.getCandidatoJornada([data.candidatoID])
-  if (parseInt(jornada.rows.jornada) == data.jornadaID) {
+  console.log(jornada.rows[0].jornada)
+  if (parseInt(jornada.rows[0].jornada) == data.jornadaID) {
     const voto = await userRepository.getFecha([data.userID]);
     if (voto.rows[0]) {
       return { message: "la persona ya voto", fecha: voto.rows[0].fecha };

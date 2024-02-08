@@ -14,6 +14,7 @@ const validarToken = async (req, res, next) => {
   if (token) {
     try {
       const result = jwt.verify(token, process.env.SK);
+      console.log(result)
       req.result = result;
       next();
     } catch (error) {

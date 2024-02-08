@@ -32,6 +32,7 @@ const getCandidatoJornada = async (userID) => {
         JOIN public.votantes ON public.candidatos.id_votantes_candidatos = public.votantes.id_votantes
         JOIN public.fichas ON public.votantes.ficha = public.fichas.id_fichas
         WHERE public.candidatos.id_candidatos = $1;`, userID)
+        console.log(ficha)
         return ficha
     } catch (error) {
         console.log(error)

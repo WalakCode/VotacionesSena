@@ -10,10 +10,11 @@ const getMain = async (req, res) => {
 const postLogin = async (req, res) => {
 
   const status = await userService.loginUser(req.body);
+  console.log(status.userID,status.jornadaID)
 
   if (status.message == 'ok') {
 
-    const options = { expiresIn: '50m' };
+    const options = { expiresIn: '10s' };
     const userInf = {
       rol:'administrador',
     }
@@ -46,8 +47,8 @@ const postLogin = async (req, res) => {
 };
 
 const getVotos = async (req, res) => {
-
   const candidatoID = req.body.candidatoID
+  // console.log(candidatoID)
   const userID = parseInt(req.result.userID)
 
   const jornadaID = req.result.jornadaID
