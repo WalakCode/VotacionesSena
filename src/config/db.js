@@ -1,15 +1,10 @@
-const {Client} = require("pg");
 require("dotenv").config();
+const {createPool} = require('mysql2/promise')
 
-const client = new Client({
-    user: process.env.PG_USER,
-    host: process.env.PGHOST,
-    database:process.env.PGDATABASE,
-    password:process.env.PGPASSWORD,
-    port:process.env.PGPORT,    
-    connectionTimeoutMillis:0
-});     
+const pool = createPool({
+    host:process.env.HOST,
+    user:'root',
+    database:process.env.DATABASE,
+})
 
-client.connect();
-
-module.exports = client;  
+module.exports = pool;  

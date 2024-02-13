@@ -14,11 +14,11 @@ const validarToken = async (req, res, next) => {
   if (token) {
     try {
       const result = jwt.verify(token, process.env.SK);
-      console.log(result)
+      // console.log(result)
       req.result = result;
       next();
     } catch (error) {
-      return res.json({
+      return res.status(400).json({
         message: "el token no es valido",
       });
     }

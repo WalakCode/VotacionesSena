@@ -1,80 +1,85 @@
 const userService = require("../../business/services/user.services");
 const statsService = require("../../business/services/stats.services");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const getMain = async (req, res) => {
-  res.send('hola mundo')
+  res.send("hola mundo");
 };
 
 const postLogin = async (req, res) => {
-
   const status = await userService.loginUser(req.body);
-  console.log(status.userID,status.jornadaID)
+  if (status.status == 202) {
+    if (status.rol == "admin") {
+      const options = { expiresIn: "15m" };
+      const userInf = {
+        rol: "admin",
+      };
+      const token = jwt.sign(userInf, process.env.SK, options);
+      res.status(status.status).json({
+        token: token,
+        message: status.message,
+      });
+    } else if (status.rol == "user") {
+      const userInf = {
+        rol: "user",
+        userID: status.userID,
+        jornadaID: status.jornadaID,
+        cedula: status.cedula,
+      };
 
-  if (status.message == 'ok') {
+      const options = { expiresIn: "15m" };
+      const token = jwt.sign(userInf, process.env.SK, options);
 
-    const options = { expiresIn: '10s' };
-    const userInf = {
-      rol:'administrador',
+      res.status(status.status).json({
+        token: token,
+        message: status.message,
+      });
     }
-    const token = jwt.sign(userInf, process.env.SK, options)
-    res.json({
-      message:'autenticado',
-      token:token
-    })
-
-  } else if (status.message) {
-    res.json(status);
   } else {
-
-    const userInf = {
-      rol: 'votante',
-      userID: status.userID,
-      jornadaID: status.jornadaID,
-      cedula: status.cedula,
-    };
-
-    const options = { expiresIn: '15m' };
-
-    const token = jwt.sign(userInf, process.env.SK, options)
-
-    res.json({
-      message: 'autenticado',
-      token: token
-    })
+    res.status(status.status).json(status.message);
   }
 };
 
 const getVotos = async (req, res) => {
-  const candidatoID = req.body.candidatoID
-  // console.log(candidatoID)
-  const userID = parseInt(req.result.userID)
+  if (req.result.rol == "user") {
+    const candidatoID = req.body.candidatoID;
 
-  const jornadaID = req.result.jornadaID
+    const userID = parseInt(req.result.userID);
 
+    const jornadaID = req.result.jornadaID;
 
-  const voto = await userService.verifyVoto({ userID, candidatoID, jornadaID })
-  if (!voto) {
-    const status = await userService.insertVoto([candidatoID, userID])
-    if (status) {
-      res.json(status)
+    const voto = await userService.verifyVoto({
+      userID,
+      candidatoID,
+      jornadaID,
+    });
+    if (voto.status == 200) {
+      const status = await userService.insertVoto([candidatoID, userID]);
+      if (status.status == 201) {
+        res.status(status.status).json(status.message);
+      } else {
+        res.status(status.status).json(status.message);
+      }
     } else {
-      res.json({ message: 'error al insertar' })
+      res.status(voto.status).json(voto.message);
     }
-  } else {
-    res.json(voto)
+  }else{
+    res.status(401).json({ mensaje: "denegado" });
   }
-}
+};
 
-const getEstadisticas = async(req,res) =>{
-  
-   
-}
+const getEstadisticas = async (req, res) => {
+  console.log(req.result);
+  if (req.result.rol == "administrador") {
+  } else {
+    res.status(401).json({ mensaje: "denegado" });
+  }
+};
 
 module.exports = {
   postLogin,
   getVotos,
   getMain,
-  getEstadisticas
+  getEstadisticas,
 };
