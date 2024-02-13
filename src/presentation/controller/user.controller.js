@@ -11,7 +11,7 @@ const postLogin = async (req, res) => {
   const status = await userService.loginUser(req.body);
   if (status.status == 202) {
     if (status.rol == "admin") {
-      const options = { expiresIn: "15m" };
+      const options = { expiresIn: "500m" };
       const userInf = {
         rol: "admin",
       };
@@ -70,8 +70,11 @@ const getVotos = async (req, res) => {
 };
 
 const getEstadisticas = async (req, res) => {
-  console.log(req.result);
-  if (req.result.rol == "administrador") {
+
+  const stats = await statsService.getEstadisticas()
+  
+  if (req.result.rol == "admin") {
+    statsService
   } else {
     res.status(401).json({ mensaje: "denegado" });
   }
