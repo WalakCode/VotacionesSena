@@ -79,6 +79,18 @@ const loginUser = async (info) => {
   }
 };
 
+const getCandidatoInfo = async () =>{
+
+  const info = await userRepository.getCandidatoInfo()
+  console.log(info)
+
+}
+
+
+
+
+
+
 const verifyVoto = async (data) => {
   const jornada = await userRepository.getCandidatoJornada([data.candidatoID]);
   if (jornada) {
@@ -120,6 +132,7 @@ const insertVoto = async (votos) => {
 
 module.exports = {
   loginUser,
+  getCandidatoInfo,
   verifyVoto,
   insertVoto,
 };

@@ -1,73 +1,99 @@
-const db = require('../../config/db')
+const db = require("../../config/db");
 
 const getUserInf = async (cedula) => {
-    try {
-        const status = await db.query(`SELECT id_votantes, cedula 
+  try {
+    const status = await db.query(
+      `SELECT id_votantes, cedula 
         FROM votantes 
         JOIN fichas ON votantes.ficha = fichas.id_fichas 
-        WHERE cedula = ? AND fichas.codigo = ?`, cedula)
-        return status
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
+        WHERE cedula = ? AND fichas.codigo = ?`,
+      cedula
+    );
+    return status;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 const getVotanteJornada = async (ficha) => {
-    try {
-        const jornada = await db.query(`SELECT jornada 
+  try {
+    const jornada = await db.query(
+      `SELECT jornada 
         FROM fichas 
-        WHERE codigo = ?`, ficha)
-        return jornada
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
+        WHERE codigo = ?`,
+      ficha
+    );
+    return jornada;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const getCandidatoInfo = async (ficha) => {
+  try {
+    const candidatoInfo = await db.query(`SELECT cedula,nombre,apellido,ciudad,ficha,img_candidato,img_tarjeton,tarjeton,plan_gob1,plan_gob2,plan_gob3,perfil_personal,slogan 
+    FROM candidatos 
+    JOIN votantes ON id_votantes_candidatos = id_votantes`);
+    return candidatoInfo
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 const getCandidatoJornada = async (userID) => {
-    try {
-        const ficha = await db.query(`SELECT fichas.jornada
+  try {
+    const ficha = await db.query(
+      `SELECT fichas.jornada
         FROM candidatos
         JOIN votantes ON candidatos.id_votantes_candidatos = votantes.id_votantes
         JOIN fichas ON votantes.ficha = fichas.id_fichas
-        WHERE candidatos.id_candidatos = ?;`, userID)
-        return ficha
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
+        WHERE candidatos.id_candidatos = ?;`,
+      userID
+    );
+    return ficha;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 const getFecha = async (userID) => {
-    try {
-        const voto = await db.query(`SELECT fecha 
+  try {
+    const voto = await db.query(
+      `SELECT fecha 
         FROM votos 
-        WHERE id_votante = ?`, userID)
-        return voto
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
+        WHERE id_votante = ?`,
+      userID
+    );
+    return voto;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 const insertVotos = async (voto) => {
-    try {
-        const inserted = await db.query(`INSERT INTO votos (id_candidato, fecha, id_votante) 
-        VALUES (?,NOW(),?)`, voto)
-        return inserted
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
-
+  try {
+    const inserted = await db.query(
+      `INSERT INTO votos (id_candidato, fecha, id_votante) 
+        VALUES (?,NOW(),?)`,
+      voto
+    );
+    return inserted;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 module.exports = {
-    getUserInf,
-    getVotanteJornada,
-    getFecha,
-    insertVotos,
-    getCandidatoJornada,
-
-}
+  getUserInf,
+  getVotanteJornada,
+  getCandidatoInfo,
+  getFecha,
+  insertVotos,
+  getCandidatoJornada,
+};

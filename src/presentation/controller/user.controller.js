@@ -3,8 +3,8 @@ const statsService = require("../../business/services/stats.services");
 
 const jwt = require("jsonwebtoken");
 
-const getMain = async (req, res) => {
-  res.send("hola mundo");
+const getCandidatos = async (req, res) => {
+  userService.getCandidatoInfo()
 };
 
 const postLogin = async (req, res) => {
@@ -70,11 +70,11 @@ const getVotos = async (req, res) => {
 };
 
 const getEstadisticas = async (req, res) => {
-
-  const stats = await statsService.getEstadisticas()
   
   if (req.result.rol == "admin") {
-    statsService
+    const stats = await statsService.getEstadisticas()
+    console.log(stats)
+    res.status(200).json({stats})
   } else {
     res.status(401).json({ mensaje: "denegado" });
   }
@@ -82,7 +82,7 @@ const getEstadisticas = async (req, res) => {
 
 module.exports = {
   postLogin,
+  getCandidatos,
   getVotos,
-  getMain,
   getEstadisticas,
 };
