@@ -3,6 +3,10 @@ const statsService = require("../../business/services/stats.services");
 
 const jwt = require("jsonwebtoken");
 
+
+const getMain = async (req,res ) =>{
+  res.send('hola')
+}
 const postLogin = async (req, res) => {
 
   const status = await userService.loginUser(req.body);
@@ -79,4 +83,5 @@ const getVotos = async (req, res) => {
 module.exports = {
   postLogin,
   getVotos,
+  getMain
 };
