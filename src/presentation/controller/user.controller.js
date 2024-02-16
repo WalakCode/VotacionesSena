@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 
 const getMain = async (req,res ) =>{
+  console.log("asdsd")
   res.send('hola')
 }
 const postLogin = async (req, res) => {
