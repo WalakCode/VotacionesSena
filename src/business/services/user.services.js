@@ -79,16 +79,11 @@ const loginUser = async (info) => {
   }
 };
 
-const getCandidatoInfo = async () =>{
-
-  const info = await userRepository.getCandidatoInfo()
-  console.log(info)
+const getCandidatoInfo = async (jornada) =>{
+  const info = await userRepository.getCandidatoInfo(jornada)
+  return info[0]
 
 }
-
-
-
-
 
 
 const verifyVoto = async (data) => {

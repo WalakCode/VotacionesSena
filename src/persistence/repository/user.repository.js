@@ -31,11 +31,15 @@ const getVotanteJornada = async (ficha) => {
   }
 };
 
-const getCandidatoInfo = async (ficha) => {
+const getCandidatoInfo = async (jornada) => {
   try {
-    const candidatoInfo = await db.query(`SELECT cedula,nombre,apellido,ciudad,ficha,img_candidato,img_tarjeton,tarjeton,plan_gob1,plan_gob2,plan_gob3,perfil_personal,slogan 
-    FROM candidatos 
-    JOIN votantes ON id_votantes_candidatos = id_votantes`);
+    const candidatoInfo = await db.query(`SELECT vt.cedula,vt.nombre,vt.apellido,vt.ciudad,vt.ficha,c.img_candidato,c.img_tarjeton,c.tarjeton,c.plan_gob1,c.plan_gob2,c.plan_gob3,c.perfil_personal,c.slogan,j.jornada
+FROM candidatos c
+JOIN votantes vt ON c.id_votantes_candidatos = vt.id_votantes
+JOIN fichas f ON vt.ficha = f.id_fichas
+JOIN jornadas j ON f.jornada = j.id_jornada
+WHERE j.id_jornada = ?;
+`,jornada);
     return candidatoInfo
   } catch (error) {
     console.log(error);

@@ -3,11 +3,8 @@ const statsService = require("../../business/services/stats.services");
 
 const jwt = require("jsonwebtoken");
 
-const getCandidatos = async (req, res) => {
-  userService.getCandidatoInfo()
-};
-
 const postLogin = async (req, res) => {
+
   const status = await userService.loginUser(req.body);
   if (status.status == 202) {
     if (status.rol == "admin") {
@@ -16,10 +13,17 @@ const postLogin = async (req, res) => {
         rol: "admin",
       };
       const token = jwt.sign(userInf, process.env.SK, options);
+
+      const stats = await statsService.getEstadisticas()
+
       res.status(status.status).json({
         token: token,
         message: status.message,
+        stats:stats
       });
+
+
+
     } else if (status.rol == "user") {
       const userInf = {
         rol: "user",
@@ -31,9 +35,12 @@ const postLogin = async (req, res) => {
       const options = { expiresIn: "15m" };
       const token = jwt.sign(userInf, process.env.SK, options);
 
+      const info = await userService.getCandidatoInfo(status.jornadaID)
+
       res.status(status.status).json({
         token: token,
         message: status.message,
+        info:info
       });
     }
   } else {
@@ -69,20 +76,7 @@ const getVotos = async (req, res) => {
   }
 };
 
-const getEstadisticas = async (req, res) => {
-  
-  if (req.result.rol == "admin") {
-    const stats = await statsService.getEstadisticas()
-    console.log(stats)
-    res.status(200).json({stats})
-  } else {
-    res.status(401).json({ mensaje: "denegado" });
-  }
-};
-
 module.exports = {
   postLogin,
-  getCandidatos,
   getVotos,
-  getEstadisticas,
 };
