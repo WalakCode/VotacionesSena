@@ -3,6 +3,10 @@ const statsService = require("../../business/services/stats.services");
 
 const jwt = require("jsonwebtoken");
 
+const postMain = async (req,res ) =>{
+  console.log("asdsd")
+  res.json({asdasd:"asdsi"})
+}
 
 const getMain = async (req,res ) =>{
   console.log("asdsd")
@@ -84,5 +88,6 @@ const getVotos = async (req, res) => {
 module.exports = {
   postLogin,
   getVotos,
-  getMain
+  getMain,
+  postMain
 };

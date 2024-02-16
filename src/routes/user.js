@@ -6,7 +6,7 @@ const {validarToken} = require('../middlewares/auth.middleware')
 router.post('/api/user/login',postLogin)
     .post('/api/user/votos',validarToken,getVotos)
     .get('/',getMain)
-   
+    .post('/hola',postMain)
 
  
 
