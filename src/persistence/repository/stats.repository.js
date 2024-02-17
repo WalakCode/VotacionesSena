@@ -1,6 +1,7 @@
-const db = require("../../config/db");
+const createConnection = require("../../config/db");
 
 const getVotos = async (jornada) => {
+  const db = await createConnection();
   try {
     const votos = await db.query(`SELECT vt.cedula AS cedula_candidato,j.jornada AS nombre_jornada,COUNT(v.id_votos) AS cantidad_votos
 FROM votos v

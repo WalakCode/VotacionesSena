@@ -1,6 +1,8 @@
-const db = require("../../config/db");
+const createConnection = require("../../config/db");
 
 const getUserInf = async (cedula) => {
+  const db = await createConnection();
+  console.log(db)
   try {
     const status = await db.query(
       `SELECT id_votantes, cedula 
@@ -17,6 +19,7 @@ const getUserInf = async (cedula) => {
 };
 
 const getVotanteJornada = async (ficha) => {
+  const db = await createConnection();
   try {
     const jornada = await db.query(
       `SELECT jornada 
@@ -32,6 +35,7 @@ const getVotanteJornada = async (ficha) => {
 };
 
 const getCandidatoInfo = async (jornada) => {
+  const db = await createConnection();
   try {
     const candidatoInfo = await db.query(`SELECT  c.id_candidatos,vt.cedula,vt.nombre,vt.apellido,vt.ciudad,vt.ficha,c.img_candidato,c.img_tarjeton,c.tarjeton,c.plan_gob1,c.plan_gob2,c.plan_gob3,c.perfil_personal,c.slogan,j.jornada
 FROM candidatos c
@@ -48,6 +52,7 @@ WHERE j.id_jornada = ?;
 };
 
 const getCandidatoJornada = async (userID) => {
+  const db = await createConnection();
   try {
     const ficha = await db.query(
       `SELECT fichas.jornada
@@ -65,6 +70,7 @@ const getCandidatoJornada = async (userID) => {
 };
 
 const getFecha = async (userID) => {
+  const db = await createConnection();
   try {
     const voto = await db.query(
       `SELECT fecha 
@@ -80,6 +86,7 @@ const getFecha = async (userID) => {
 };
 
 const insertVotos = async (voto) => {
+  const db = await createConnection();
   try {
     const inserted = await db.query(
       `INSERT INTO votos (id_candidato, fecha, id_votante) 

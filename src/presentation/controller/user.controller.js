@@ -13,7 +13,7 @@ const getMain = async (req,res ) =>{
   res.send('hola')
 }
 const postLogin = async (req, res) => {
-  console.log('hola')
+
   const status = await userService.loginUser(req.body);
   if (status.status == 202) {
     if (status.rol == "admin") {
