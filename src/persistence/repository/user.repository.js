@@ -2,7 +2,6 @@ const createConnection = require("../../config/db");
 
 const getUserInf = async (cedula) => {
   const db = await createConnection();
-  console.log(db)
   try {
     const status = await db.query(
       `SELECT id_votantes, cedula 
@@ -15,6 +14,8 @@ const getUserInf = async (cedula) => {
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 
@@ -31,6 +32,8 @@ const getVotanteJornada = async (ficha) => {
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 
@@ -48,6 +51,8 @@ WHERE j.id_jornada = ?;
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 
@@ -66,6 +71,8 @@ const getCandidatoJornada = async (userID) => {
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 
@@ -82,6 +89,8 @@ const getFecha = async (userID) => {
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 
@@ -97,6 +106,8 @@ const insertVotos = async (voto) => {
   } catch (error) {
     console.log(error);
     return null;
+  }finally{
+    await db.end()
   }
 };
 

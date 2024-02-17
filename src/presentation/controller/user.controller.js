@@ -3,15 +3,7 @@ const statsService = require("../../business/services/stats.services");
 
 const jwt = require("jsonwebtoken");
 
-const postMain = async (req,res ) =>{
-  console.log("asdsd")
-  res.json({asdasd:"asdsi"})
-}
 
-const getMain = async (req,res ) =>{
-  console.log("asdsd")
-  res.send('hola')
-}
 const postLogin = async (req, res) => {
 
   const status = await userService.loginUser(req.body);
@@ -30,8 +22,6 @@ const postLogin = async (req, res) => {
         message: status.message,
         stats:stats
       });
-
-
 
     } else if (status.rol == "user") {
       const userInf = {
@@ -88,6 +78,5 @@ const getVotos = async (req, res) => {
 module.exports = {
   postLogin,
   getVotos,
-  getMain,
-  postMain
+
 };

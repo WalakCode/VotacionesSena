@@ -17,6 +17,8 @@ ORDER BY cantidad_votos DESC;
     return votos
   } catch (error) {
     console.log(error)
+  }finally{
+    await db.end()
   }
 };
 
