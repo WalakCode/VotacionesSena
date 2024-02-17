@@ -16,7 +16,7 @@ Puedes utilizar los siguientes endpoints directamente desde railway, render o en
 #### Validar credenciales
 - `POST https://votaciones.up.railway.app/api/login`: Valida credenciales
 - `POST https://votaciones-10lp.onrender.com/api/login`: Valida credenciales
-- `POST https://localhost:(tu_puerto)/api/login`: Valida credenciales
+- `POST http://localhost:(tu_puerto)/api/login`: Valida credenciales
 
 
 
@@ -37,7 +37,7 @@ curl -X POST https://el_dominio_elegido/api/login \
 #### Insertar Voto
 - `POST https://votaciones.up.railway.app/api/votos`: Insertar Voto
 - `POST https://votaciones-10lp.onrender.com/api/votos`: Insertar Voto
-- `POST https://localhost:(tu_puerto)/api/votos`: Insertar Voto
+- `POST http://localhost:(tu_puerto)/api/votos`: Insertar Voto
 
 
 Envía una solicitud POST con tus credenciales:
