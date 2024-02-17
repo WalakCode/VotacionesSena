@@ -3,7 +3,6 @@ const app = express();
 const router = require("./routes/user");
 const path = require("path");
 
-
 require("dotenv").config();
 
 app.use(express.json());
@@ -16,8 +15,4 @@ app.use("/", router);
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => {
-  console.log(`Working on port:${port} 
-link:http://localhost:8080/`);
-});
-
+app.listen(port);
