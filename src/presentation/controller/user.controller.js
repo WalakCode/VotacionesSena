@@ -76,7 +76,6 @@ const postVotos = async (req, res) => {
       candidatoID,
       jornadaID,
     });
-
     
     if (voto.status == 200) {
       //si la verificacion fue correcta se llamar al servicio del usuario de crear el voto en la DB
