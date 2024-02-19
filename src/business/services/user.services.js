@@ -41,7 +41,7 @@ const loginUser = async (info) => {
         //en caso de que existan letras se valida si son las credenciales exactas del administrador, SE PODRIAN USAR VARIABLES DE ENTORNO 
         if (info.cedula == "colombia62T" && info.ficha == "622022*") {
           //si es asi se envia el rol, el mensaje y el codigo de status
-          return { rol: "admin", message: "autenticado", status: 202 };
+          return { rol: "admin", message: "admin autenticado", status: 202 };
         } else {
           return {
             //en caso de que no sean las credenciales de administrador se envia mensaje de error y codigo de status
@@ -70,7 +70,7 @@ const loginUser = async (info) => {
             //se retorna un objeto con la informacion del usuario logeado, un mensaje de autenticacion y el codigo de status 
             return {
               rol: "user",
-              message: "autenticado",
+              message: "user autenticado",
               jornadaID,
               userID,
               cedula,

@@ -47,11 +47,14 @@ const postLogin = async (req, res) => {
       const info = await userService.getCandidatoInfo(status.jornadaID);
 
       //se envia el token, el mensaje de validacion y la informacion de los candidatos de la jornada en especifico
+      res.header("Authorization", `Bearer ${token}`);
+      
       res.status(status.status).json({
-        token: token,
         message: status.message,
         info: info,
       });
+
+
     }
     //se envia el codigo de status y el error correspondiente en caso de errores
   } else {
