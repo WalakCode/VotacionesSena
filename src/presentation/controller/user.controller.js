@@ -43,15 +43,13 @@ const postLogin = async (req, res) => {
       const options = { expiresIn: "15m" };
       const token = jwt.sign(userInf, process.env.SK, options);
 
-      //se obtiene la informacion de todos los candidatos segun la jornada del aprendiz que inicio sesion
-      const info = await userService.getCandidatoInfo(status.jornadaID);
+  
 
       //se envia el token, el mensaje de validacion y la informacion de los candidatos de la jornada en especifico
       res.header("Authorization", `Bearer ${token}`);
-      
+
       res.status(status.status).json({
         message: status.message,
-        info: info,
       });
 
 
@@ -100,7 +98,14 @@ const postVotos = async (req, res) => {
   }
 };
 
+const getCandidatos = async (req,res)=>{
+    const status = req.result.jornadaID
+    const info = await userService.getCandidatoInfo(status);
+
+  
+}
 module.exports = {
   postLogin,
   postVotos,
+  getCandidatos
 };

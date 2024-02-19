@@ -70,6 +70,7 @@ WHERE j.id_jornada = ?;
       jornada
     );
     //si la consulta fue exitosa devuelve los resultados encontrados
+    console.log(jornada)
     return candidatoInfo;
   } catch (error) {
     console.log(error);
