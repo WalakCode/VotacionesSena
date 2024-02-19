@@ -7,7 +7,5 @@ router.post('/api/login',postLogin) //ruta para iniciar sesion como aprendiz o a
     .post('/api/votos',validarToken,postVotos) //ruta para que el aprendiz vote
  
 
- 
-
 
 module.exports = router 
