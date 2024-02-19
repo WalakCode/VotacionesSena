@@ -8,6 +8,6 @@ router.post('/api/login',postLogin) //ruta para iniciar sesion como aprendiz o a
  
 
  
- 
+
 
 module.exports = router 

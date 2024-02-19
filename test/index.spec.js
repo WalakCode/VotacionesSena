@@ -70,9 +70,4 @@ describe('POST /api/login',()=>{
         expect(response.body).toEqual(expect.stringContaining("no existe cedula o ficha"))
     })
 
-    afterAll(done => {
-        // Cerrar el servidor devuelto por app.listen
-        const server = app.listen();
-        server.close(done);
-      });
 })
