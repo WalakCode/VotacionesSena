@@ -1,5 +1,5 @@
 
-# Votaciones Sena 
+# Votaciones Sena v2
 
 una API creada para manejar las votaciones de representantes de jornada del SENA 
 
