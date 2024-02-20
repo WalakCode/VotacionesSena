@@ -9,6 +9,7 @@ const getEstadisticas = async () => {
   const statsVirtual = await statsRepository.getVotos(4);
   const statsBlanco = await statsRepository.getVotosBlanco();
 
+  console.log(statsTarde)
   //en caso de que no sea null se ejecuta el algoritmo de separacion de candidatos y cantidad de votos
   if (
     statsMañana &&
@@ -23,6 +24,8 @@ const getEstadisticas = async () => {
     const votosNoche = countVotos(statsNoche[0]);
     const votosVirtual = countVotos(statsVirtual[0]);
     const votosBlancos = countVotosBlanco(statsBlanco[0]);
+    console.log(statsTarde)
+
 
     //se guarda el objeto con todos los datos en objetos de votosJornada
     const allStats = { votosMañana, votosTarde, votosNoche, votosVirtual, votosBlancos };
@@ -46,15 +49,22 @@ const getEstadisticas = async () => {
   //funcion de contar los votos
   function countVotos(statsArray) {
     //recibe el array de las estadisticas de la jornada
+    const list = []
     const mapa = {};
     //se crea un objeto
     statsArray.forEach((e) => {
       //se recorre el array de las estadisticas de los candidatos
-      mapa[e.cedula_candidato] = e.cantidad_votos;
-      //se guarda en el objeto como clave la cedula del candidato y como valor la cantidad de votos
+      mapa['nombre'] = e.nombre_votante
+      mapa['apellido'] = e.apellido_votante
+      mapa['cedula'] = e.cedula_candidato
+      mapa['ciudad'] = e.ciudad_votante
+      mapa['jornada'] = e.nombre_jornada
+      mapa['cantidad_votos'] = e.cantidad_votos
+      list.push(mapa)
     });
 
-    return mapa;
+
+    return list
   }
 };
 

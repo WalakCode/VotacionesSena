@@ -10,6 +10,4 @@ router.post('/login',postLogin) //ruta para iniciar sesion como aprendiz o admin
  
 
  
-
-
 module.exports = router 
