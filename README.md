@@ -14,15 +14,15 @@ Puedes utilizar los siguientes endpoints directamente desde railway, render o en
 
 
 #### Validar credenciales
-- `POST https://votaciones.up.railway.app/api/login`: Valida credenciales
-- `POST https://votaciones-10lp.onrender.com/api/login`: Valida credenciales
-- `POST http://localhost:(tu_puerto)/api/login`: Valida credenciales
+- `POST https://votaciones.up.railway.app/api/v2/login`: Valida credenciales
+- `POST https://votaciones-10lp.onrender.com/api/v2/login`: Valida credenciales
+- `POST http://localhost:(tu_puerto)/api/v2/login`: Valida credenciales
 
 
 
 Envía una solicitud POST con tus credenciales:
 ```bash
-curl -X POST https://el_dominio_elegido/api/login \
+curl -X POST https://el_dominio_elegido/api/v2/login \
   -H "Content-Type: application/json" \
   -d '{
     "cedula": "123",
@@ -35,14 +35,14 @@ curl -X POST https://el_dominio_elegido/api/login \
  
 
 #### Insertar Voto
-- `POST https://votaciones.up.railway.app/api/votos`: Insertar Voto
-- `POST https://votaciones-10lp.onrender.com/api/votos`: Insertar Voto
-- `POST http://localhost:(tu_puerto)/api/votos`: Insertar Voto
+- `POST https://votaciones.up.railway.app/api/v2/votos`: Insertar Voto
+- `POST https://votaciones-10lp.onrender.com/api/v2/votos`: Insertar Voto
+- `POST http://localhost:(tu_puerto)/api/v2/votos`: Insertar Voto
 
 
 Envía una solicitud POST con tus credenciales:
 ```bash
-curl -X POST https://el_dominio_elegido/api/votos \
+curl -X POST https://el_dominio_elegido/api/v2/votos \
   -H "Authorization: Bearer tu_token_jwt" || "x-access-token: Bearer tu_token_jwt" \
   -H "Content-Type: application/json" \
   -d '{

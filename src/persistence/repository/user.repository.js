@@ -70,7 +70,6 @@ WHERE j.id_jornada = ?;
       jornada
     );
     //si la consulta fue exitosa devuelve los resultados encontrados
-    console.log(jornada)
     return candidatoInfo;
   } catch (error) {
     console.log(error);
@@ -133,7 +132,48 @@ const getFecha = async (userID) => {
     await db.end();
   }
 };
-
+const insertVotoBlanco = async(voto)=>{
+  const db = await createConnection()
+    //se crea la conexion 
+  try{
+    //query
+    const inserted = await db.query(`
+    INSERT INTO votos_blancos (jornada,id_votante,fecha) 
+    VALUES (?,?,NOW())
+    `,voto)
+    return inserted
+  }catch(error){
+    console.log(error)
+    ///en caso de que haya error en la consulta devuelve null para futuras comparaciones
+    return null
+  }finally{
+    //se cierra la conexion
+    await db.end();
+  }
+};
+const getFechaBlanco = async (userID) => {
+  const db = await createConnection();
+  //se crea la conexion
+  try {
+    //query
+    const voto = await db.query(
+      `SELECT fecha 
+        FROM votos_blancos 
+        WHERE id_votante = ?`,
+        //se le pasa el id del aprendiz logeado
+      userID
+    );
+    //si la consulta fue exitosa devuelve los resultados encontrados
+    return voto;
+  } catch (error) {
+    console.log(error);
+         ///en caso de que haya error en la consulta devuelve null para futuras comparaciones
+    return null;
+  } finally {
+    //se cierra la conexion
+    await db.end();
+  }
+};
 //funcion para crear los votos
 const insertVotos = async (voto) => {
   const db = await createConnection();
@@ -165,4 +205,6 @@ module.exports = {
   getFecha,
   insertVotos,
   getCandidatoJornada,
+  insertVotoBlanco,
+  getFechaBlanco
 };
