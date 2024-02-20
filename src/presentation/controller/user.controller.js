@@ -19,15 +19,11 @@ const postLogin = async (req, res) => {
         rol: "admin",
       };
       const token = jwt.sign(userInf, process.env.SK, options);
-
-      //se llama el servicio de las estadisticas para obtenerlas
-      const stats = await statsService.getEstadisticas();
-
       //se envia el token, mensaje de autenticado, y todas las estadisticas de todas las jornadas
+      res.header("Authorization", `Bearer ${token}`);
+
       res.status(status.status).json({
-        token: token,
         message: status.message,
-        stats: stats,
       });
 
       //se recibe del servicio los datos del aprendiz 
@@ -70,7 +66,6 @@ const postVotos = async (req, res) => {
     const userID = parseInt(req.result.userID);
     const jornadaID = req.result.jornadaID;
 
-
     if(candidatoID == 99999){
       const voto = await userService.insertVotoBlanco({
         userID,
@@ -112,6 +107,7 @@ const postVotos = async (req, res) => {
 };
 
 const getCandidatos = async (req,res)=>{
+  if (req.result.rol == "user") {
     const status = req.result.jornadaID
     const info = await userService.getCandidatoInfo(status);
     if(info.status == 200){
@@ -122,11 +118,26 @@ const getCandidatos = async (req,res)=>{
     }else{
       res.status(info.status).json({message:info.message})
     }
+  }else{
+    res.status(401).json({ message: "denegado" });
+  }
+    
 }
 
 const getEstadisticas = async(req,res)=>{
-
+  if (req.result.rol == "admin") {
+    const stats = await statsService.getEstadisticas();
+    if(stats){
+      res.status(stats.status).json({message:stats.message, info:stats.info})
+    }else{
+      res.status(info.status).json({message:info.message})
+    }
+  }else{
+    res.status(401).json({ message: "denegado" });
+  }
+ 
 }
+
 module.exports = {
   postLogin,
   postVotos,
