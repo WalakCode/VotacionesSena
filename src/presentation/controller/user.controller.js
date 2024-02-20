@@ -24,8 +24,9 @@ const postLogin = async (req, res) => {
       const stats = await statsService.getEstadisticas();
 
       //se envia el token, mensaje de autenticado, y todas las estadisticas de todas las jornadas
+      res.header("Authorization", `Bearer ${token}`);
+      
       res.status(status.status).json({
-        token: token,
         message: status.message,
         stats: stats,
       });
