@@ -107,6 +107,7 @@ const postVotos = async (req, res) => {
   } else {
     //si el rol no es usuario, se le deniega el acceso a poder votar
     res.status(401).json({ mensaje: "denegado" });
+    
   }
 };
 
@@ -114,15 +115,21 @@ const getCandidatos = async (req,res)=>{
     const status = req.result.jornadaID
     const info = await userService.getCandidatoInfo(status);
     if(info.status == 200){
-      res.stats(info.status).json({
-        message,info
+      res.status(info.status).json({
+        message:info.message,
+        info:info.info
       })
+    }else{
+      res.status(info.status).json({message:info.message})
     }
+}
 
-  
+const getEstadisticas = async(req,res)=>{
+
 }
 module.exports = {
   postLogin,
   postVotos,
-  getCandidatos
+  getCandidatos,
+  getEstadisticas
 };

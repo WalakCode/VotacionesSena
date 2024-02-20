@@ -184,13 +184,16 @@ const insertVotoBlanco = async (data) => {
         status: 400,
       };
     } else {
+      //se llama funcion para insertar el voto en blanco
       const votoBlanco = await userRepository.insertVotoBlanco([
         data.jornadaID,
         data.userID,
       ]);
       if (votoBlanco) {
+            //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
         return { message: "la persona realizo el voto", status: 201 };
       } else {
+        //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
         return { message: "error interno del servidor", status: 500 };
       }
     }
