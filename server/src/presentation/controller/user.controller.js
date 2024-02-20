@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //funcion para iniciar sesion 
 const postLogin = async (req, res) => {
-
+  console.log(req.body)
   //llama al servicio del usuario para validar credenciales
   const status = await userService.loginUser(req.body); //recibe credenciales por el body de la peticion
 

@@ -4,6 +4,7 @@ const userRepository = require("../../persistence/repository/user.repository");
 const loginUser = async (info) => {
   //se crea una funcion para validar si la fecha actual es en la que se inicia las votaciones  recibe cedula y ficha
 
+  console.log(info)
   let votacionActivada = true; //colocar en false al sacarlo a produccion
 
   const fechaActual = new Date();
