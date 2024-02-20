@@ -168,10 +168,42 @@ const insertVoto = async (votos) => {
     return { message: "error interno del servidor", status: 500 };
   }
 };
+const insertVotoBlanco = async (data) => {
+  const voto = await userRepository.getFechaBlanco([data.userID]);
+  //llama al repositorio del usuario para usar la funcion de obtener fecha para verificar si existe ya el voto
+  if (voto) {
+    //en caso de que la consulta sea exitosa pregunta si existen resultados
+    if (voto[0].length > 0) {
+      //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
+      return {
+        message: "la persona ya voto",
+        fecha: voto[0][0].fecha,
+        status: 400,
+      };
+    } else {
+      //se llama funcion para insertar el voto en blanco
+      const votoBlanco = await userRepository.insertVotoBlanco([
+        data.jornadaID,
+        data.userID,
+      ]);
+      if (votoBlanco) {
+            //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
+        return { message: "la persona realizo el voto", status: 201 };
+      } else {
+        //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
+        return { message: "error interno del servidor", status: 500 };
+      }
+    }
+  } else {
+    //en caso de que la consulta no devuelva nada manda mensaje de error del servidor y el codigo de status
+    return { message: "error interno del servidor", status: 500 };
+  }
+};
 
 module.exports = {
   loginUser,
   getCandidatoInfo,
   verifyVoto,
   insertVoto,
+  insertVotoBlanco
 };

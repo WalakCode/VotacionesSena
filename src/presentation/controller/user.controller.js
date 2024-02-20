@@ -68,12 +68,23 @@ const postVotos = async (req, res) => {
   if (req.result.rol == "user") {
     //recibe por el body el id del candidato, por el cual el aprendiz voto (el id de todos los candidatos de la jornada del aprendiz se dio cuando este se logeo)
     const candidatoID = req.body.candidatoID;
-
     //recie por el token verificado y devuelto, el id del aprendiz y la jornada del mismo
     const userID = parseInt(req.result.userID);
     const jornadaID = req.result.jornadaID;
 
-    //se llama al servicio del usuario para verificar la validez del voto (se le mandan los 3 datos antes mencionados)
+
+    if(candidatoID == 99999){
+      const voto = await userService.insertVotoBlanco({
+        userID,
+        candidatoID,
+        jornadaID,
+      })
+
+      res.status(voto.status).json(voto.message);
+
+
+    }else{
+      //se llama al servicio del usuario para verificar la validez del voto (se le mandan los 3 datos antes mencionados)
     const voto = await userService.verifyVoto({
       userID,
       candidatoID,
@@ -94,9 +105,11 @@ const postVotos = async (req, res) => {
       //si la verificacion no fue exitosa envia el codigo de estatus y el error
       res.status(voto.status).json(voto.message);
     }
+    }
   } else {
     //si el rol no es usuario, se le deniega el acceso a poder votar
     res.status(401).json({ mensaje: "denegado" });
+    
   }
 };
 
