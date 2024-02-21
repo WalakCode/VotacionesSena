@@ -10,7 +10,7 @@ const postLogin = async (req, res) => {
   const status = await userService.loginUser(req.body); //recibe credenciales por el body de la peticion
 
   //si estatus devolvio 202, puede ser tanto admin como administrador, revisar el rol
-  if (status.status == 202) {
+  if (status.status == 200) {
     //si es administrador, recibas las estadisticas de las votaciones hasta el momento (todas las jornadas)
     if (status.rol == "admin") {
       //se crea el jwt con la informacion del admin
@@ -87,7 +87,7 @@ const postVotos = async (req, res) => {
     if (voto.status == 200) {
       //si la verificacion fue correcta se llamar al servicio del usuario de crear el voto en la DB
       const status = await userService.insertVoto([candidatoID, userID]);
-      if (status.status == 201) {
+      if (status.status == 200) {
         //si  el crear el voto fue exitoso, se envia el status y el mensaje de exito
         res.status(status.status).json(status.message);
       } else {
@@ -101,7 +101,7 @@ const postVotos = async (req, res) => {
     }
   } else {
     //si el rol no es usuario, se le deniega el acceso a poder votar
-    res.status(401).json({ mensaje: "denegado" });
+    res.status(400).json({ mensaje: "denegado" });
     
   }
 };
@@ -119,7 +119,7 @@ const getCandidatos = async (req,res)=>{
       res.status(info.status).json({message:info.message})
     }
   }else{
-    res.status(401).json({ message: "denegado" });
+    res.status(400).json({ message: "denegado" });
   }
     
 }
@@ -133,7 +133,7 @@ const getEstadisticas = async(req,res)=>{
       res.status(info.status).json({message:info.message})
     }
   }else{
-    res.status(401).json({ message: "denegado" });
+    res.status(400).json({ message: "denegado" });
   }
  
 }

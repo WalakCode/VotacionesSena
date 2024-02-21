@@ -41,7 +41,7 @@ const loginUser = async (info) => {
         //en caso de que existan letras se valida si son las credenciales exactas del administrador, SE PODRIAN USAR VARIABLES DE ENTORNO
         if (info.cedula == "colombia62T" && info.ficha == "622022*") {
           //si es asi se envia el rol, el mensaje y el codigo de status
-          return { rol: "admin", message: "admin autenticado", status: 202 };
+          return { rol: "admin", message: "admin autenticado", status: 200 };
         } else {
           return {
             //en caso de que no sean las credenciales de administrador se envia mensaje de error y codigo de status
@@ -78,7 +78,7 @@ const loginUser = async (info) => {
             };
             //en caso de que la consulta haya sido exitosa pero no traiga nada se envia el mensaje de error y el codigo de status
           } else {
-            return { message: "no existe cedula o ficha", status: 404 };
+            return { message: "no existe cedula o ficha", status: 400 };
           }
         } else {
           //en caso de que no haya sido exitosa la consulta se envia error del servidor y el codigo de status
@@ -119,7 +119,7 @@ const verifyVoto = async (data) => {
     //si la consula fue exitosa obtiene los resultados de esta
     if (!jornada[0].length > 0) {
       //pregunta si la devolvio algo la consulta y si es distinto de vacio si no es asi es por que metio un id del candidato que no existe
-      return { message: "no existe ese candidato", status: 404 };
+      return { message: "no existe ese candidato", status: 400 };
       //se envia el mensaje de error y el status
     } else {
       if (jornada[0][0].jornada == data.jornadaID) {
@@ -164,7 +164,7 @@ const insertVoto = async (votos) => {
   // como ya se verifico el voto en la funcion anterior, se crea directamente en la base de datos
   if (inserted) {
     //si la consulta fue bien, se manda mensaje de exito y el codigo de status
-    return { message: "la persona realizo el voto", status: 201 };
+    return { message: "la persona realizo el voto", status: 200 };
   } else {
     //si la consulta fue MAL, se manda mensaje de ERROR y el codigo de status
     return { message: "error interno del servidor", status: 500 };
@@ -191,7 +191,7 @@ const insertVotoBlanco = async (data) => {
       ]);
       if (votoBlanco) {
             //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
-        return { message: "la persona realizo el voto", status: 201 };
+        return { message: "la persona realizo el voto", status: 200 };
       } else {
         //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
         return { message: "error interno del servidor", status: 500 };

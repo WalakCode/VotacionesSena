@@ -27,7 +27,9 @@ const getEstadisticas = async () => {
     const allStats  = {votosMañana,votosTarde,votosNoche,votosVirtual,votosBlanco}
 
     return {message:"estadisticas",status:200,info:allStats}
-  } 
+  } else{
+    return {message:"error interno del servidor",status:500}
+  }
 
 
   function countVotosBlanco(array) {
