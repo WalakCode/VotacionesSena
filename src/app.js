@@ -3,18 +3,14 @@ const app = express();
 const router = require("./routes/user");
 const path = require("path");
 require("dotenv").config();
-
-
 const cors = require("cors");
 
-const corsconfig = {
-    exposedHeaders: ["Authorization"],
-}
-
-corsconfig['origin'] = process.env.CORS_ORIGIN 
 
 app.use(
-    cors(corsconfig)
+    cors( {
+        origin:process.env.CORS_ORIGIN,
+        exposedHeaders: ["Authorization"],
+    })
 );
 
 
