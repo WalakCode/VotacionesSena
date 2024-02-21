@@ -4,6 +4,19 @@ const router = require("./routes/user");
 const path = require("path");
 
 
+const cors = require("cors");
+
+const corsconfig = {
+    exposedHeaders: ["Authorization"],
+}
+
+corsconfig['origin'] = process.env.CORS_ORIGIN 
+
+app.use(
+    cors(corsconfig)
+);
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
