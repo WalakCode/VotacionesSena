@@ -2,16 +2,13 @@ const express = require("express");
 const app = express();
 const router = require("./routes/user");
 const path = require("path");
-require("dotenv").config();
 const cors = require("cors");
 
 
-app.use(
-    cors( {
-        origin:process.env.CORS_ORIGIN,
-        exposedHeaders: ["Authorization"],
-    })
-);
+app.use(cors({
+    origin: 'http://localhost:5173',
+    exposedHeaders: ['Authorization'],  
+}));
 
 
 app.use(express.json());

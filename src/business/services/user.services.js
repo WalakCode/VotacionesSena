@@ -67,14 +67,14 @@ const loginUser = async (info) => {
             const jornada = await userRepository.getVotanteJornada([ficha]);
             //aqui no hay ningun try and catch pero se podria crear en caso de que la consulta falle - segun mi logica no deberia de fallar pero se puede implementar
             const jornadaID = jornada[0][0].jornada;
-            //se retorna un objeto con la informacion del usuario logeado, un mensaje de autenticacion y el codigo de status
+      //se retorna un objeto con la informacion del usuario logeado, un mensaje de autenticacion y el codigo de status
             return {
               rol: "user",
               message: "user autenticado",
               jornadaID,
               userID,
               cedula,
-              status: 202,
+              status: 200,
             };
             //en caso de que la consulta haya sido exitosa pero no traiga nada se envia el mensaje de error y el codigo de status
           } else {
@@ -93,7 +93,7 @@ const loginUser = async (info) => {
     //si la fecha aun no es la correcta se envia mensaje de status y codigo de error
     return {
       message: "las votaciones ya acabaron o aun no comienzan",
-      status: 401,
+      status: 400,
     };
   }
 };

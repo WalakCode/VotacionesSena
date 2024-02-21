@@ -38,12 +38,12 @@ const postLogin = async (req, res) => {
 
       const options = { expiresIn: "15m" };
       const token = jwt.sign(userInf, process.env.SK, options);
-
   
 
       //se envia el token, el mensaje de validacion y la informacion de los candidatos de la jornada en especifico
-      res.header("Authorization", `Bearer ${token}`);
 
+      res.header("Authorization", `Bearer ${token}`);
+      
       res.status(status.status).json({
         message: status.message,
       });
