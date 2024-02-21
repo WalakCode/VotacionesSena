@@ -3,10 +3,12 @@ const app = express();
 const router = require("./routes/user");
 const path = require("path");
 const cors = require("cors");
+require("dotenv").config();
+
 
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN,
     exposedHeaders: ['Authorization'],  
 }));
 
