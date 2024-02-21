@@ -8,7 +8,7 @@ require("dotenv").config();
 
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: 'prueba-production-c732.up.railway.app',
     exposedHeaders: ['Authorization'],  
 }));
 
