@@ -127,7 +127,6 @@ const getCandidatos = async (req,res)=>{
 const getEstadisticas = async(req,res)=>{
   if (req.result.rol == "admin") {
     const stats = await statsService.getEstadisticas();
-    console.log(stats.info)
     if(stats){
       res.status(stats.status).json({message:stats.message, info:stats.info})
     }else{
