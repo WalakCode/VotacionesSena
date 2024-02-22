@@ -7,21 +7,25 @@ const getVotos = async (jornada) => {
   try {
     //query
     const votos = await db.query(
-      `SELECT vt.cedula AS cedula_candidato, 
-      vt.nombre AS nombre_votante, 
-      vt.apellido AS apellido_votante, 
-      vt.ciudad AS ciudad_votante, 
-      j.jornada AS nombre_jornada, 
+      `SELECT
+      vt.cedula AS cedula_candidato,
+      vt.nombre AS nombre_votante,
+      vt.apellido AS apellido_votante,
+      vt.ciudad AS ciudad_votante,
+      j.jornada AS nombre_jornada,
       COALESCE(COUNT(v.id_votos), 0) AS cantidad_votos
-FROM jornadas j
-LEFT JOIN fichas f ON j.id_jornada = f.jornada
-LEFT JOIN votantes vt ON f.id_fichas = vt.ficha
-LEFT JOIN candidatos c ON vt.id_votantes = c.id_votantes_candidatos
-LEFT JOIN votos v ON c.id_candidatos = v.id_candidato
-WHERE j.id_jornada = ?
-GROUP BY c.id_candidatos, vt.cedula, j.jornada
-ORDER BY cantidad_votos DESC;
-
+  FROM
+      jornadas j
+  LEFT JOIN fichas f ON j.id_jornada = f.jornada
+  LEFT JOIN votantes vt ON f.id_fichas = vt.ficha
+  LEFT JOIN candidatos c ON vt.id_votantes = c.id_votantes_candidatos
+  LEFT JOIN votos v ON c.id_candidatos = v.id_candidato
+  WHERE
+      j.id_jornada = 1
+  GROUP BY
+      j.id_jornada, vt.cedula, vt.nombre, vt.apellido, vt.ciudad, j.jornada
+  ORDER BY
+      cantidad_votos DESC;
 `,
 //se le pasa la jornada a consultar
       jornada
