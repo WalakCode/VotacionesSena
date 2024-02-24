@@ -21,7 +21,7 @@ const getVotos = async (jornada) => {
   LEFT JOIN candidatos c ON vt.id_votantes = c.id_votantes_candidatos
   LEFT JOIN votos v ON c.id_candidatos = v.id_candidato
   WHERE
-      j.id_jornada = 1
+      j.id_jornada = ?
   GROUP BY
       j.id_jornada, vt.cedula, vt.nombre, vt.apellido, vt.ciudad, j.jornada
   ORDER BY
