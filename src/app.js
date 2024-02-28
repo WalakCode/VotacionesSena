@@ -8,7 +8,7 @@ require("dotenv").config();
 
 
 app.use(cors({
-    origin: 'https://votacionessenaapp-production.up.railway.app',
+    origin:['https://votacionessenaapp-production.up.railway.app','http://localhost:5173'],
     exposedHeaders: ['Authorization'],  
 }));
 
