@@ -18,7 +18,7 @@ const getVotos = async (jornada) => {
       jornadas j
   LEFT JOIN fichas f ON j.id_jornada = f.jornada
   LEFT JOIN votantes vt ON f.id_fichas = vt.ficha
-  LEFT JOIN candidatos c ON vt.id_votantes = c.id_votantes_candidatos
+  JOIN candidatos c ON vt.id_votantes = c.id_votantes_candidatos
   LEFT JOIN votos v ON c.id_candidatos = v.id_candidato
   WHERE
       j.id_jornada = ?
