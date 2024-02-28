@@ -102,6 +102,7 @@ const loginUser = async (info) => {
 const getCandidatoInfo = async (jornada) => {
   //se llama al repositorio del usuaruio para obtener la informacion
   const info = await userRepository.getCandidatoInfo(jornada);
+  console.log(info)
   //se retorna todos los candidatos de la jornada con su informacion
   if(info){
     return {message:"candidatos obtenidos",status:200,info:info[0]};

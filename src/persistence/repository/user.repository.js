@@ -59,7 +59,7 @@ const getCandidatoInfo = async (jornada) => {
   try {
     //la query
     const candidatoInfo = await db.query(
-      `SELECT  c.id_candidatos,vt.cedula,vt.nombre,vt.apellido,vt.ciudad,vt.ficha,c.img_candidato,c.img_tarjeton,c.tarjeton,c.plan_gob1,c.plan_gob2,c.plan_gob3,c.perfil_personal,c.slogan,j.jornada
+      `SELECT  c.id_candidatos,vt.cedula,vt.nombre,vt.apellido,vt.ciudad,f.nombre AS ficha,f.codigo AS id_ficha,c.img_candidato,c.tarjeton,j.jornada
 FROM candidatos c
 JOIN votantes vt ON c.id_votantes_candidatos = vt.id_votantes
 JOIN fichas f ON vt.ficha = f.id_fichas
