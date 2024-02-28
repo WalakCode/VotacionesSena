@@ -60,11 +60,11 @@ const getCandidatoInfo = async (jornada) => {
     //la query
     const candidatoInfo = await db.query(
       `SELECT  c.id_candidatos,vt.cedula,vt.nombre,vt.apellido,vt.ciudad,f.nombre AS ficha,f.codigo AS id_ficha,c.img_candidato,c.tarjeton,j.jornada
-FROM candidatos c
-JOIN votantes vt ON c.id_votantes_candidatos = vt.id_votantes
-JOIN fichas f ON vt.ficha = f.id_fichas
-JOIN jornadas j ON f.jornada = j.id_jornada
-WHERE j.id_jornada = ?;
+      FROM candidatos c
+      JOIN votantes vt ON c.id_votantes_candidatos = vt.id_votantes
+      JOIN fichas f ON vt.ficha = f.id_fichas
+      JOIN jornadas j ON f.jornada = j.id_jornada
+      WHERE j.id_jornada = ?;
 `,
 //se le pasa la jornada
       jornada
