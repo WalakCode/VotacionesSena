@@ -18,13 +18,13 @@ const getEstadisticas = async () => {
     statsVirtual &&
     statsBlanco != null
   ) {
-    const votosMañana = statsMañana[0]
-    const votosTarde = statsTarde[0]
-    const votosNoche = statsNoche[0]
-    const votosVirtual = statsVirtual[0]
-    const votosBlanco = countVotosBlanco(statsBlanco[0])
+    const Mañana = statsMañana[0]
+    const Tarde = statsTarde[0]
+    const Noche = statsNoche[0]
+    const Virtual = statsVirtual[0]
+    const Blanco = countVotosBlanco(statsBlanco[0])
 
-    const allStats  = {votosMañana,votosTarde,votosNoche,votosVirtual,votosBlanco}
+    const allStats  = {Mañana,Tarde,Noche,Virtual,Blanco}
 
     return {message:"Estadisticas",status:200,info:allStats}
   } else{
