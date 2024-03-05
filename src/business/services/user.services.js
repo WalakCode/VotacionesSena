@@ -102,6 +102,7 @@ const loginUser = async (info) => {
 const getCandidatoInfo = async (jornada) => {
   //se llama al repositorio del usuaruio para obtener la informacion
   const info = await userRepository.getCandidatoInfo(jornada);
+  console.log(info)
   //se retorna todos los candidatos de la jornada con su informacion
   if(info){
     return {message:"Candidatos obtenidos",status:200,info:info[0]};
@@ -125,8 +126,9 @@ const verifyVoto = async (data) => {
       if (jornada[0][0].jornada == data.jornadaID) {
         //si existen resultados compara con la jornada que obtubo del candidato con la jornada del aprendiz logeado
         const voto = await userRepository.getFecha([data.userID]);
+        const voto2 = await userRepository.getFechaBlanco([data.userID]);
         //llama al repositorio del usuario para usar la funcion de obtener fecha para verificar si existe ya el voto
-        if (voto) {
+        if (voto && voto2) {
           //en caso de que la consulta sea exitosa pregunta si existen resultados
           if (voto[0].length > 0) {
             //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
@@ -135,7 +137,14 @@ const verifyVoto = async (data) => {
               fecha: voto[0][0].fecha,
               status: 400,
             };
-          } else {
+          } else if(voto2[0].length > 0){
+            return {
+              message: "La persona ya voto",
+              fecha: voto2[0][0].fecha,
+              status: 400,
+            };
+          }
+          else {
             //en caso de que no exista un voto asociado le da un mensaje de exito y el codigo de status
             return { message: "La persona puede votar", status: 200 };
           }
@@ -173,17 +182,26 @@ const insertVoto = async (votos) => {
 
 const insertVotoBlanco = async (data) => {
   const voto = await userRepository.getFechaBlanco([data.userID]);
+  const voto2 = await userRepository.getFecha([data.userID])
+
   //llama al repositorio del usuario para usar la funcion de obtener fecha para verificar si existe ya el voto
-  if (voto) {
+  if (voto && voto2) {
     //en caso de que la consulta sea exitosa pregunta si existen resultados
-    if (voto[0].length > 0) {
+    if (voto[0].length > 0){
       //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
       return {
         message: "La persona ya voto",
         fecha: voto[0][0].fecha,
         status: 400,
       };
-    } else {
+    }
+    else if(voto2[0].length >  0){
+      return {
+        message: "La persona ya voto",
+        fecha: voto2[0][0].fecha,
+        status: 400,
+      };
+    }else {
       //se llama funcion para insertar el voto en blanco
       const votoBlanco = await userRepository.insertVotoBlanco([
         data.jornadaID,
@@ -191,7 +209,7 @@ const insertVotoBlanco = async (data) => {
       ]);
       if (votoBlanco) {
             //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
-        return { message: "La persona realizo el voto", status: 200 };
+        return { message: "La persona realizo el voto en blanco", status: 200 };
       } else {
         //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
         return { message: "Error interno del servidor", status: 500 };
