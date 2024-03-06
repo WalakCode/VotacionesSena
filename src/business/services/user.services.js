@@ -4,7 +4,7 @@ const userRepository = require("../../persistence/repository/user.repository");
 const loginUser = async (info) => {
   //se crea una funcion para validar si la fecha actual es en la que se inicia las votaciones  recibe cedula y ficha
 
-  let votacionActivada = false; //colocar en false al sacarlo a produccion
+  let votacionActivada = true; //colocar en false al sacarlo a produccion
 
   const fechaActual = new Date();
   //cambiar las fechas si se quiere probar con otros dias con minima y maxima correspondientemente
@@ -92,8 +92,8 @@ const loginUser = async (info) => {
   } else {
     //si la fecha aun no es la correcta se envia mensaje de status y codigo de error
     return {
-      message: "las votaciones ya acabaron o aun no comienzan",
-      status: 400,
+      message: "las votaciones ya acabaron o aún no comienzan",
+      status: 405,
     };
   }
 };
