@@ -209,7 +209,7 @@ const insertVotoBlanco = async (data) => {
       ]);
       if (votoBlanco) {
             //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
-        return { message: "La persona realizó el voto en blanco", status: 200 };
+        return { message: "La persona realizó el voto", status: 200 };
       } else {
         //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
         return { message: "Error interno del servidor", status: 500 };
