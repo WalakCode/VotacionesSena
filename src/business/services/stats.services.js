@@ -26,7 +26,7 @@ const getEstadisticas = async () => {
 
     const allStats  = {Mañana,Tarde,Noche,Virtual,Blanco}
 
-    return {message:"Estadisticas",status:200,info:allStats}
+    return {message:"Estadísticas",status:200,info:allStats}
   } else{
     return {message:"Error interno del servidor",status:500}
   }

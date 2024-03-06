@@ -4,7 +4,7 @@ const userRepository = require("../../persistence/repository/user.repository");
 const loginUser = async (info) => {
   //se crea una funcion para validar si la fecha actual es en la que se inicia las votaciones  recibe cedula y ficha
 
-  let votacionActivada = true; //colocar en false al sacarlo a produccion
+  let votacionActivada = false; //colocar en false al sacarlo a produccion
 
   const fechaActual = new Date();
   //cambiar las fechas si se quiere probar con otros dias con minima y maxima correspondientemente
@@ -45,7 +45,7 @@ const loginUser = async (info) => {
         } else {
           return {
             //en caso de que no sean las credenciales de administrador se envia mensaje de error y codigo de status
-            message: "Escriba ficha o cedula valida (numero)",
+            message: "Escriba ficha o cédula valida (número)",
             status: 400,
           };
         }
@@ -78,7 +78,7 @@ const loginUser = async (info) => {
             };
             //en caso de que la consulta haya sido exitosa pero no traiga nada se envia el mensaje de error y el codigo de status
           } else {
-            return { message: "No existe cedula o ficha", status: 400 };
+            return { message: "No existe cédula o ficha", status: 400 };
           }
         } else {
           //en caso de que no haya sido exitosa la consulta se envia error del servidor y el codigo de status
@@ -133,13 +133,13 @@ const verifyVoto = async (data) => {
           if (voto[0].length > 0) {
             //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
             return {
-              message: "La persona ya voto",
+              message: "La persona ya votó",
               fecha: voto[0][0].fecha,
               status: 400,
             };
           } else if(voto2[0].length > 0){
             return {
-              message: "La persona ya voto",
+              message: "La persona ya votó",
               fecha: voto2[0][0].fecha,
               status: 400,
             };
@@ -156,7 +156,7 @@ const verifyVoto = async (data) => {
         //en caso de que las jornadas del usuario y la jornada del candidato no sean las mismas, se envia el emnsaje de error y el codigo de status
         return {
           message:
-            "Se esta votanto de otra jornada que no es la del usuario logeado",
+            "Se esta votando de otra jornada que no es la del usuario logeado",
           status: 400,
         };
       }
@@ -190,14 +190,14 @@ const insertVotoBlanco = async (data) => {
     if (voto[0].length > 0){
       //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
       return {
-        message: "La persona ya voto",
+        message: "La persona ya votó",
         fecha: voto[0][0].fecha,
         status: 400,
       };
     }
     else if(voto2[0].length >  0){
       return {
-        message: "La persona ya voto",
+        message: "La persona ya votó",
         fecha: voto2[0][0].fecha,
         status: 400,
       };
@@ -209,7 +209,7 @@ const insertVotoBlanco = async (data) => {
       ]);
       if (votoBlanco) {
             //si la consula fue exitosa devuelve un mensaje de exito y codigo 201
-        return { message: "La persona realizo el voto en blanco", status: 200 };
+        return { message: "La persona realizó el voto en blanco", status: 200 };
       } else {
         //si la consula no fue exitosa devuelve un mensaje de error del servidor y codigo 500
         return { message: "Error interno del servidor", status: 500 };
