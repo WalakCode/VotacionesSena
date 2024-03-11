@@ -6,7 +6,7 @@ const validarToken = async (req, res, next) => {
   let token = req.headers["x-access-token"] || req.headers["authorization"];
   if (!token) {
     //si el token no existe, se envia el error correspondiente
-    res.status(401).send({
+    res.status(400).send({
       error: "es necesario el token",
     });
     return;

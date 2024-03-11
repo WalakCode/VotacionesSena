@@ -1,16 +1,18 @@
 {
   "name": "votacionessena",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "test": "jest --detectOpenHandles --runInBand"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
@@ -18,6 +20,8 @@
     "mysql2": "^3.9.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.3",
+    "supertest": "^6.3.4"
   }
 }
