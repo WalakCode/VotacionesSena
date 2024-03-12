@@ -4,7 +4,7 @@ const userRepository = require("../../persistence/repository/user.repository");
 const loginUser = async (info) => {
   //se crea una funcion para validar si la fecha actual es en la que se inicia las votaciones  recibe cedula y ficha
 
-  let votacionActivada = true; //colocar en false al sacarlo a produccion
+  let votacionActivada = false; //colocar en false al sacarlo a produccion
 
   const fechaActual = new Date();
   //cambiar las fechas si se quiere probar con otros dias con minima y maxima correspondientemente
@@ -29,7 +29,7 @@ const loginUser = async (info) => {
 
   //pregunta si la fecha actuale es valida
   if (fechaActual > fechaLimiteMinima && fechaActual < fechaLimiteMaxima) {
-    votacionActivada = true;
+    votacionActivada = false;
   }
 
   //si la fecha es valida se empieza a validar las credenciales
